@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}
+FitBuddy Admin Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-section">
+
+    <div class="container">
+
+        <div class="result-header">
+
+            <span class="badge">
+                ADMIN DASHBOARD
+            </span>
+
+            <h1>
+                FitBuddy Users
+            </h1>
+
+            <p>
+                View registered users and their generated plans.
+            </p>
+
+        </div>
+
+
+        {% if not users %}
+
+        <div class="card empty-state">
+
+            <h2>
+                No users yet.
+            </h2>
+
+            <p>
+                Generate your first fitness plan to see it here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        {% for user in users %}
+
+        <div class="card admin-user-card">
+
+            <div class="admin-user-header">
+
+                <div>
+
+                    <span class="small-label">
+                        USER
+                    </span>
+
+                    <h2>
+                        {{ user.username }}
+                    </h2>
+
+                </div>
+
+                <span class="user-id">
+                    {{ user.user_id }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+                <div class="profile-item">
+
+                    <span>
+                        Age
+                    </span>
+
+                    <strong>
+                        {{ user.age }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <span>
+                        Weight
+                    </span>
+
+                    <strong>
+                        {{ user.weight }} kg
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <span>
+                        Goal
+                    </span>
+
+                    <strong>
+                        {{ user.goal }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <span>
+                        Intensity
+                    </span>
+
+                    <strong>
+                        {{ user.intensity }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-plan-grid">
+
+                <div>
+
+                    <h3>
+                        Original Plan
+                    </h3>
+
+                    <pre class="admin-plan">
+{{ user.original_plan }}
+                    </pre>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Updated Plan
+                    </h3>
+
+                    {% if user.updated_plan %}
+
+                    <pre class="admin-plan">
+{{ user.updated_plan }}
+                    </pre>
+
+                    {% else %}
+
+                    <div class="empty-plan">
+                        No update submitted yet.
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% if user.feedback %}
+
+            <div class="feedback-display">
+
+                <strong>
+                    Latest Feedback
+                </strong>
+
+                <p>
+                    {{ user.feedback }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

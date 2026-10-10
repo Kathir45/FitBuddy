@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}
+Your FitBuddy Plan
+{% endblock %}
+
+
+{% block content %}
+
+<section class="result-section">
+
+    <div class="container">
+
+        <div class="result-header">
+
+            <span class="badge">
+                {% if updated %}
+                UPDATED PLAN
+                {% else %}
+                YOUR PERSONALIZED PLAN
+                {% endif %}
+            </span>
+
+            <h1>
+                Hey {{ user.username }}, here's your plan.
+            </h1>
+
+            <p>
+                Built for your
+                <strong>{{ user.goal }}</strong>
+                goal at
+                <strong>{{ user.intensity }}</strong>
+                intensity.
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+        <div class="alert error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        {% if updated %}
+
+        <div class="alert success">
+            Your workout plan has been updated based on your feedback.
+        </div>
+
+        {% endif %}
+
+
+        <div class="profile-grid">
+
+            <div class="profile-item">
+
+                <span>
+                    User ID
+                </span>
+
+                <strong>
+                    {{ user.user_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>
+                    Age
+                </span>
+
+                <strong>
+                    {{ user.age }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>
+                    Weight
+                </span>
+
+                <strong>
+                    {{ user.weight }} kg
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>
+                    Goal
+                </span>
+
+                <strong>
+                    {{ user.goal }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>
+                    Intensity
+                </span>
+
+                <strong>
+                    {{ user.intensity }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="content-grid">
+
+
+            <div class="card plan-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="small-label">
+                            7-DAY WORKOUT
+                        </span>
+
+                        <h2>
+                            Your Workout Plan
+                        </h2>
+
+                    </div>
+
+                    <span class="icon">
+                        🏋️
+                    </span>
+
+                </div>
+
+
+                <pre class="plan-content">{{ workout_plan }}</pre>
+
+            </div>
+
+
+            <div class="card nutrition-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="small-label">
+                            AI NUTRITION
+                        </span>
+
+                        <h2>
+                            Nutrition & Recovery
+                        </h2>
+
+                    </div>
+
+                    <span class="icon">
+                        🥗
+                    </span>
+
+                </div>
+
+
+                <p class="nutrition-tip">
+                    {{ nutrition_tip }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card feedback-card">
+
+            <span class="small-label">
+                PERSONALIZE
+            </span>
+
+            <h2>
+                Want to change your plan?
+            </h2>
+
+            <p class="muted">
+                Tell FitBuddy what you want to change.
+                For example: "Add more cardio", "Give me more rest days",
+                or "Make the workouts shorter."
+            </p>
+
+
+            <form
+                action="/submit-feedback"
+                method="post"
+            >
+
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ user.user_id }}"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="feedback">
+                        Your feedback
+                    </label>
+
+                    <textarea
+                        id="feedback"
+                        name="feedback"
+                        rows="5"
+                        maxlength="2000"
+                        placeholder="Tell FitBuddy what you want to change..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Update My Plan →
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="back-link">
+
+            <a href="/">
+                ← Create another plan
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
